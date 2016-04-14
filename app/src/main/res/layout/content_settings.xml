@@ -10,15 +10,25 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.smeanox.apps.webcomicreader.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="com.smeanox.apps.webcomicreader.Settings"
+    tools:showIn="@layout/activity_settings">
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/MainButtonRuthe"
-        android:id="@+id/mainButtonRuthe"
-        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/app_name"
+        android:id="@+id/textView"
+        android:layout_above="@+id/textView2"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/SettingsCopyright"
+        android:id="@+id/textView2"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="openRuthe"/>
+        android:layout_marginBottom="42dp"/>
 </RelativeLayout>

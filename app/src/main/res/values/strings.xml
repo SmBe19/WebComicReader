@@ -1,4 +1,28 @@
 <resources>
-    <string name="app_name">WebComicReader</string>
+    <string name="app_name">Web Comic Reader</string>
     <string name="action_settings">Settings</string>
+    <string name="MainButtonRuthe">Ruthe</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="SettingsCopyright">© 2016 Benjamin Schmid</string>
+    <string name="title_activity_comic_ruthe">Ruthe</string>
+    <string name="action_download_all">Download all</string>
+    <string name="action_search">search</string>
+    <string name="ImageViewDescription">comic</string>
+    <string name="rutheButtonPrev"><![CDATA[< prev]]></string>
+    <string name="rutheButtonRand">rand</string>
+    <string name="rutheButtonNext"><![CDATA[next >]]></string>
+    <string name="action_delete">delete comics</string>
+    <string name="ruthe_url_prefix">http://ruthe.de/cartoons/strip_</string>
+    <string name="ruthe_url_postfix">.jpg</string>
+    <string name="rutheDownloadPrefix">ruthe</string>
+    <string name="rutheDownloadPostfix">.jpg</string>
+    <string name="RutheNotTitle">Downloading</string>
+    <string name="RutheNotText">Downloading Ruthe</string>
+    <string name="RutheNotTextFinished">Downloading Ruthe finished</string>
+    <string name="action_first">first comic</string>
+    <string name="action_last">last comic</string>
+    <string name="rutheDeleteDialogTitle">Are you sure?</string>
+    <string name="rutheDeleteDialogMessage">Do you really want to delete everything?</string>
+    <string name="rutheDeleteDialogPositive">Yes I do!</string>
+    <string name="rutheDeleteDialogNegative">Nope!!!</string>
 </resources>
