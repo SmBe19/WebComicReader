@@ -20,5 +20,5 @@
         android:id="@+id/mainButtonRuthe"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:onClick="openRuthe"/>
+        android:onClick="openComic"/>
 </RelativeLayout>

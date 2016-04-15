@@ -31,7 +31,7 @@
                 android:value="com.smeanox.apps.webcomicreader.MainActivity"/>
         </activity>
         <activity
-            android:name=".ComicRuthe"
+            android:name=".ComicActivity"
             android:label="@string/title_activity_comic_ruthe"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -42,7 +42,7 @@
 
 
         <service
-            android:name=".ComicRutheDownloadAllService"
+            android:name=".ComicDownloadService"
             android:exported="false"/>
     </application>
 

@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.smeanox.apps.webcomicreader.ComicRuthe"
-    tools:showIn="@layout/activity_comic_ruthe">
+    tools:context=".ComicActivity"
+    tools:showIn="@layout/activity_comic">
 
     <ImageView
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/rutheButtonPrev"
-            android:onClick="prevRuthe"
+            android:onClick="prevComic"
             android:id="@+id/rutheButtonPrev"/>
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/rutheButtonRand"
-            android:onClick="randRuthe"
+            android:onClick="randComic"
             android:id="@+id/rutheButtonRand"/>
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/rutheButtonNext"
-            android:onClick="nextRuthe"
+            android:onClick="nextComic"
             android:id="@+id/rutheButtonNext"/>
     </LinearLayout>
 </LinearLayout>

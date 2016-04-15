@@ -2,15 +2,16 @@ package com.smeanox.apps.webcomicreader;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+
+	public static final String EXTRA_COMIC_NAME = "com.smeanox.apps.webcomicreader.COMIC_NAME";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void openRuthe(View view) {
-		Intent intent = new Intent(this, ComicRuthe.class);
+	public void openComic(View view) {
+		Intent intent = new Intent(this, ComicActivity.class);
+		intent.putExtra(EXTRA_COMIC_NAME, ((Button) view).getText());
 		startActivity(intent);
 	}
 }

@@ -21,8 +21,8 @@
     <string name="RutheNotTextFinished">Downloading Ruthe finished</string>
     <string name="action_first">first comic</string>
     <string name="action_last">last comic</string>
-    <string name="rutheDeleteDialogTitle">Are you sure?</string>
-    <string name="rutheDeleteDialogMessage">Do you really want to delete everything?</string>
-    <string name="rutheDeleteDialogPositive">Yes I do!</string>
-    <string name="rutheDeleteDialogNegative">Nope!!!</string>
+    <string name="deleteDialogTitle">Are you sure?</string>
+    <string name="deleteDialogMessage">Do you really want to delete everything?</string>
+    <string name="deleteDialogPositive">Yes I do!</string>
+    <string name="eleteDialogNegative">Nope!!!</string>
 </resources>
