@@ -20,7 +20,7 @@ public class Comic {
 		this.fileUrl = fileUrl;
 		this.title = title;
 		this.altText = altText;
-		this.localFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), localFile);
+		this.localFile = new File(comicProvider.getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), localFile);
 	}
 
 	public ComicProvider getComicProvider() {

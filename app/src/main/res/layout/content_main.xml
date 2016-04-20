@@ -21,4 +21,13 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:onClick="openComic"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/MainButtonXkcd"
+        android:id="@+id/mainButtonXkcd"
+        android:onClick="openComic"
+        android:layout_below="@+id/mainButtonRuthe"
+        android:layout_alignLeft="@+id/mainButtonRuthe"
+        android:layout_alignStart="@+id/mainButtonRuthe"/>
 </RelativeLayout>

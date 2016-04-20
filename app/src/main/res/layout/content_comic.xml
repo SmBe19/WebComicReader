@@ -10,6 +10,14 @@
     tools:context=".ComicActivity"
     tools:showIn="@layout/activity_comic">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+        android:id="@+id/titleText"
+        android:layout_gravity="center_horizontal"/>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -17,6 +25,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:contentDescription="@string/ImageViewDescription"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text=""
+        android:id="@+id/altText"
+        android:layout_gravity="center_horizontal"/>
 
     <LinearLayout
         android:orientation="horizontal"

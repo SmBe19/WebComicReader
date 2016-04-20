@@ -22,6 +22,7 @@ public class ComicDownloadService extends IntentService {
 
 	public static final String BROADCAST_PROGRESS = "com.smeanox.apps.webcomicreader.COMICDOWNLOAD";
 	public static final String EXTRA_PROVIDER = "com.smeanox.apps.webcomicreader.COMICDOWNLOAD_PROVIDER";
+	public static final String EXTRA_COMIC_COUNT = "com.smeanox.apps.webcomicreader.COMICDOWNLOAD_COMICCOUNT";
 	public static final String EXTRA_PROGRESS = "com.smeanox.apps.webcomicreader.COMICDOWNLOAD_PROGRESS";
 	public static final String EXTRA_FINISHED = "com.smeanox.apps.webcomicreader.COMICDOWNLOAD_FINISHED";
 	private int notificationId;
@@ -41,7 +42,7 @@ public class ComicDownloadService extends IntentService {
 
 		int prevId = ComicProvider.ID_END_FRONT;
 		int curId = 1;
-		String curUrl = "";
+		String curUrl = provider.getStartUrl();
 		Comic lastComic = provider.getLastComic();
 		if(lastComic != null){
 			prevId = lastComic.getPrevId();
@@ -58,9 +59,14 @@ public class ComicDownloadService extends IntentService {
 		NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this)
 				.setSmallIcon(android.R.drawable.stat_sys_download)
 				.setContentTitle(provider.getNotificationTitle())
-				.setContentText(provider.getNotificationMessage())
+				.setContentText(provider.getNotificationMessage(curId))
 				.setOngoing(true);
 		notificationManager.notify(notificationId, notBuilder.build());
+
+		int downloaded = 0;
+		int downloadCount = intent.getIntExtra(EXTRA_COMIC_COUNT, -1);
+		int progressStep = getResources().getInteger(R.integer.downloadProgressNotificationStep);
+		int lastProgress = -progressStep;
 
 		while (true){
 			String comicFile = getComicFile(curId, curUrl);
@@ -84,24 +90,39 @@ public class ComicDownloadService extends IntentService {
 
 					if(newRowId != curId){
 						System.err.println("Id mismatch: " + newRowId + " / " + curId);
+						if(newRowId > curId) {
+							curId = (int) newRowId;
+						}
 					}
 
 					values.clear();
 					values.put(Comic.COLUMN_NAME_NEXT, curId);
-					String selection = Comic.COLUMN_NAME_ID + " = ?";
+					String selection = Comic.COLUMN_NAME_ID + " LIKE ?";
 					String[] selectionArgs = {String.valueOf(prevId)};
-					db.update(provider.getTableName(), values, selection, selectionArgs);
+					int cnt = db.update(provider.getTableName(), values, selection, selectionArgs);
 
 					notifyNewComic(curId, false);
+
+					if(curId - lastProgress > progressStep){
+						notBuilder.setContentText(provider.getNotificationMessage(curId));
+						notificationManager.notify(notificationId, notBuilder.build());
+						lastProgress = curId;
+					}
 				}
 				prevId = curId;
+				downloaded++;
+				curId++;
+
+				if(downloadCount > 0 && downloaded > downloadCount){
+					break;
+				}
 			} else {
 				bad++;
 				if (nextUrl == null || bad > downloadBadAllowed) {
 					break;
 				}
 			}
-			curId++;
+			// TODO check whether old and new url are the same (difficult right now for ruthe)
 			curUrl = nextUrl;
 		}
 
@@ -162,6 +183,7 @@ public class ComicDownloadService extends IntentService {
 
 	private String downloadFile(ComicProvider provider, int id, String fileUrl){
 		try {
+			System.err.println(fileUrl);
 			URL url = new URL(fileUrl);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setInstanceFollowRedirects(false);

@@ -2,16 +2,19 @@
     <string name="app_name">Web Comic Reader</string>
     <string name="action_settings">Settings</string>
     <string name="MainButtonRuthe">Ruthe</string>
+    <string name="MainButtonXkcd">Xkcd</string>
     <string name="title_activity_settings">Settings</string>
     <string name="SettingsCopyright">© 2016 Benjamin Schmid</string>
-    <string name="title_activity_comic_ruthe">Ruthe</string>
+    <string name="title_activity_comic">Comic</string>
     <string name="action_download_all">Download all</string>
+    <string name="action_download_some">Download some</string>
     <string name="action_search">search</string>
     <string name="ImageViewDescription">comic</string>
     <string name="rutheButtonPrev"><![CDATA[< prev]]></string>
     <string name="rutheButtonRand">rand</string>
     <string name="rutheButtonNext"><![CDATA[next >]]></string>
     <string name="action_delete">delete comics</string>
+
     <string name="ruthe_url_prefix">http://ruthe.de/cartoons/strip_</string>
     <string name="ruthe_url_postfix">.jpg</string>
     <string name="rutheDownloadPrefix">ruthe</string>
@@ -19,6 +22,19 @@
     <string name="RutheNotTitle">Downloading</string>
     <string name="RutheNotText">Downloading Ruthe</string>
     <string name="RutheNotTextFinished">Downloading Ruthe finished</string>
+
+    <string name="xkcd_url_prefix">http://xkcd.com</string>
+    <string name="xkcd_url_postfix"></string>
+    <string name="xkcdDownloadPrefix">xkcd</string>
+    <string name="xkcdDownloadPostfix">.png</string>
+    <string name="xkcdNotTitle">Downloading</string>
+    <string name="xkcdNotText">Downloading xkcd</string>
+    <string name="xkcdNotTextFinished">Downloading xkcd finished</string>
+    <string name="xkcdNextRegex"><![CDATA[<a rel=\"next\" href=\"(\\S*?)\" accesskey=\"n\">]]></string>
+    <string name="xkcdImgRegex"><![CDATA[Image URL \\(for hotlinking/embedding\\): (\\S*)]]></string>
+    <string name="xkcdTitleRegex"><![CDATA[<div id=\"ctitle\">(.*?)</div>]]></string>
+    <string name="xkcdAltRegex"><![CDATA[<img src=\"\\S*?\" title=\"(.*?)\" ]]></string>
+
     <string name="action_first">first comic</string>
     <string name="action_last">last comic</string>
     <string name="deleteDialogTitle">Are you sure?</string>

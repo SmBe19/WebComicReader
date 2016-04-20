@@ -18,12 +18,13 @@ import java.util.Map;
 public abstract class ComicProvider {
 
 	public enum ComicProviders{
-		ruthe
+		ruthe,
+		xkcd,
 	}
 	private static Map<ComicProviders, ComicProvider> comicProvidersComicProviderMap = new HashMap<>();
 
-	public static final int ID_END_FRONT = -1;
-	public static final int ID_END_BACK = -2;
+	public static final int ID_END_FRONT = Integer.MAX_VALUE - 1;
+	public static final int ID_END_BACK = Integer.MAX_VALUE - 2;
 
 	private Context context;
 	private Comic firstComic, lastComic;
@@ -60,7 +61,7 @@ public abstract class ComicProvider {
 
 	public abstract String getNotificationTitle();
 
-	public abstract String getNotificationMessage();
+	public abstract String getNotificationMessage(int id);
 
 	public abstract String getNotificationMessageDone();
 
@@ -94,7 +95,7 @@ public abstract class ComicProvider {
 		if(firstComic == null){
 			SQLiteDatabase db = dbh.getReadableDatabase();
 			String[] projection = {Comic.COLUMN_NAME_ID};
-			String selection = Comic.COLUMN_NAME_PREV + " = ?";
+			String selection = Comic.COLUMN_NAME_PREV + " LIKE ?";
 			String[] selectionArgs = {String.valueOf(ID_END_FRONT)};
 			Cursor c = db.query(getTableName(), projection, selection, selectionArgs, null, null, null);
 			c.moveToFirst();
@@ -110,7 +111,7 @@ public abstract class ComicProvider {
 		if(lastComic == null){
 			SQLiteDatabase db = dbh.getReadableDatabase();
 			String[] projection = {Comic.COLUMN_NAME_ID};
-			String selection = Comic.COLUMN_NAME_NEXT + " = ?";
+			String selection = Comic.COLUMN_NAME_NEXT + " LIKE ?";
 			String[] selectionArgs = {String.valueOf(ID_END_BACK)};
 			Cursor c = db.query(getTableName(), projection, selection, selectionArgs, null, null, null);
 			c.moveToFirst();
@@ -129,11 +130,17 @@ public abstract class ComicProvider {
 		String[] selectionArgs = {};
 		Cursor c = db.query(getTableName(), projection, selection, selectionArgs, null, null, null);
 		c.moveToFirst();
+		if(c.getCount() == 0){
+			c.close();
+			return null;
+		}
 		int element = (int) (Math.random() * c.getCount());
-		for (int i = 0; i < element; i++) {
+		for (int i = 1; i < element; i++) {
 			c.moveToNext();
 		}
-		return getComicById(c.getInt(c.getColumnIndexOrThrow(Comic.COLUMN_NAME_ID)));
+		Comic comic = getComicById(c.getInt(c.getColumnIndexOrThrow(Comic.COLUMN_NAME_ID)));
+		c.close();
+		return comic;
 	}
 
 	public Comic getComicById(int id){
@@ -149,7 +156,7 @@ public abstract class ComicProvider {
 					Comic.COLUMN_NAME_PREV,
 					Comic.COLUMN_NAME_NEXT,
 			};
-			String selection = Comic.COLUMN_NAME_ID + " = ?";
+			String selection = Comic.COLUMN_NAME_ID + " LIKE ?";
 			String[] selectionArgs = {String.valueOf(id)};
 			Cursor c = db.query(getTableName(), projection, selection, selectionArgs, null, null, null);
 			c.moveToFirst();
@@ -171,12 +178,22 @@ public abstract class ComicProvider {
 	}
 
 	public void downloadAll(){
+		downloadSome(-1);
+	}
+
+	public void downloadSome(){
+		int downloadCount = getContext().getResources().getInteger(R.integer.downloadPerClick);
+		downloadSome(downloadCount);
+	}
+
+	private void downloadSome(int count){
 		if(downloading){
 			return;
 		}
 		downloading = true;
 		Intent intent = new Intent(context, ComicDownloadService.class);
 		intent.putExtra(ComicDownloadService.EXTRA_PROVIDER, getComicProviders());
+		intent.putExtra(ComicDownloadService.EXTRA_COMIC_COUNT, count);
 		context.startService(intent);
 	}
 
@@ -204,7 +221,6 @@ public abstract class ComicProvider {
 			} else {
 				int id = intent.getIntExtra(ComicDownloadService.EXTRA_PROGRESS, -1);
 				if(id >= 0) {
-					comics.remove(id);
 				}
 			}
 		}
@@ -245,6 +261,7 @@ public abstract class ComicProvider {
 		public void deleteTable(){
 			SQLiteDatabase db = getWritableDatabase();
 			db.execSQL("DROP TABLE IF EXISTS " + getTableName());
+			createTable();
 		}
 	}
 

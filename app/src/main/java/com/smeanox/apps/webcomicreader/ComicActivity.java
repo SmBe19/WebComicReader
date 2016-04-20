@@ -12,8 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
+import java.util.Stack;
 
 public class ComicActivity extends AppCompatActivity {
 
@@ -23,17 +25,28 @@ public class ComicActivity extends AppCompatActivity {
 
 	private ComicProvider provider;
 
+	private Stack<Comic> lastComics;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comic);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		provider = new ComicProviderRuthe(this);
+		String comicName = getIntent().getStringExtra(MainActivity.EXTRA_COMIC_NAME);
+		if(getResources().getString(R.string.MainButtonRuthe).equals(comicName)){
+			provider = new ComicProviderRuthe(this);
+		} else {
+			provider = new ComicProviderXkcd(this);
+		}
+		getSupportActionBar().setTitle(comicName);
 
 		prefs = getSharedPreferences(provider.getPrefsName(), MODE_PRIVATE);
 		currentComic = provider.getComicById(prefs.getInt(PREFS_CURRENT_COMIC, 0));
+
+		lastComics = new Stack<>();
 
 		updateCurrentComic();
 	}
@@ -53,6 +66,9 @@ public class ComicActivity extends AppCompatActivity {
 			case R.id.action_download_all:
 				provider.downloadAll();
 				return true;
+			case R.id.action_download_some:
+				provider.downloadSome();
+				return true;
 			case R.id.action_delete:
 				new AlertDialog.Builder(this)
 						.setTitle(getString(R.string.deleteDialogTitle))
@@ -69,20 +85,31 @@ public class ComicActivity extends AppCompatActivity {
 						.setNegativeButton(getString(R.string.eleteDialogNegative), null).show();
 				return true;
 			case R.id.action_first:
-				currentComic = provider.getFirstComic();
-				updateCurrentComic();
+				setCurrentComic(provider.getFirstComic());
 				return true;
 			case R.id.action_last:
-				currentComic = provider.getLastComic();
-				updateCurrentComic();
+				setCurrentComic(provider.getLastComic());
+				return true;
+			case android.R.id.home:
+				this.finish();
 				return true;
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
 
+	private void setCurrentComic(Comic comic){
+		if(currentComic != null){
+			lastComics.push(currentComic);
+		}
+		currentComic = comic;
+		updateCurrentComic();
+	}
+
 	private void updateCurrentComic() {
 		ImageView imageView = (ImageView) findViewById(R.id.imageView);
+		TextView titleView = (TextView) findViewById(R.id.titleText);
+		TextView altView = (TextView) findViewById(R.id.altText);
 		if(currentComic == null){
 			imageView.setImageURI(null);
 			return;
@@ -92,6 +119,8 @@ public class ComicActivity extends AppCompatActivity {
 			imageView.setImageURI(null);
 		} else {
 			imageView.setImageURI(Uri.fromFile(comicFile));
+			titleView.setText(currentComic.getTitle());
+			altView.setText(currentComic.getAltText());
 		}
 
 		prefs.edit().putInt(PREFS_CURRENT_COMIC, currentComic.getId()).commit();
@@ -99,23 +128,30 @@ public class ComicActivity extends AppCompatActivity {
 
 	public void prevComic(View view) {
 		if (currentComic == null) {
-			currentComic = provider.getLastComic();
+			setCurrentComic(provider.getLastComic());
 		} else if(currentComic.hasPrevious()){
-			currentComic = currentComic.getPrevious();
-			updateCurrentComic();
+			setCurrentComic(currentComic.getPrevious());
 		}
 	}
 
 	public void randComic(View view) {
-		currentComic = provider.getRandomComic();
-		updateCurrentComic();
+		setCurrentComic(provider.getRandomComic());
 	}
 
 	public void nextComic(View view) {
 		if (currentComic == null) {
-			currentComic = provider.getLastComic();
+			setCurrentComic(provider.getLastComic());
 		} else if (currentComic.hasNext()) {
-			currentComic = currentComic.getNext();
+			setCurrentComic(currentComic.getNext());
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		if(lastComics.isEmpty()) {
+			super.onBackPressed();
+		} else {
+			currentComic = lastComics.pop();
 			updateCurrentComic();
 		}
 	}

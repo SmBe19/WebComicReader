@@ -29,8 +29,8 @@ public class ComicProviderRuthe extends ComicProvider {
 	}
 
 	@Override
-	public String getNotificationMessage() {
-		return getContext().getString(R.string.RutheNotText);
+	public String getNotificationMessage(int id) {
+		return getContext().getString(R.string.RutheNotText) + " " + id;
 	}
 
 	@Override
@@ -65,11 +65,11 @@ public class ComicProviderRuthe extends ComicProvider {
 
 	@Override
 	public String getFilePrefix() {
-		return "ruthe";
+		return getContext().getResources().getString(R.string.rutheDownloadPrefix);
 	}
 
 	@Override
 	public String getFileSuffix() {
-		return ".jpg";
+		return getContext().getResources().getString(R.string.rutheDownloadPostfix);
 	}
 }
