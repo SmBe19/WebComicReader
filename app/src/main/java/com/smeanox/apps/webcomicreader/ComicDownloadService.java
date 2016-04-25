@@ -69,61 +69,78 @@ public class ComicDownloadService extends IntentService {
 		int lastProgress = -progressStep;
 
 		while (true){
-			String comicFile = getComicFile(curId, curUrl);
-			String fileUrl = provider.extractFileUrl(curId, comicFile);
-			String nextUrl = provider.extractNextUrl(curId, comicFile);
-			String localFile = downloadFile(provider, curId, fileUrl);
-			if (fileUrl != null && localFile != null) {
-				if(provider.getComicById(curId) == null){
-					SQLiteDatabase db = provider.getDbh().getWritableDatabase();
-					ContentValues values = new ContentValues();
-					values.put(Comic.COLUMN_NAME_ID, curId);
-					values.put(Comic.COLUMN_NAME_TITLE, provider.extractTitle(curId, comicFile));
-					values.put(Comic.COLUMN_NAME_ALT_TEXT, provider.extractAltText(curId, comicFile));
-					values.put(Comic.COLUMN_NAME_COMIC_URL, curUrl);
-					values.put(Comic.COLUMN_NAME_FILE_URL, fileUrl);
-					values.put(Comic.COLUMN_NAME_LOCAL_FILE, localFile);
-					values.put(Comic.COLUMN_NAME_PREV, prevId);
-					values.put(Comic.COLUMN_NAME_NEXT, ComicProvider.ID_END_BACK);
+			String comicFile = null;
+			if(provider.needComicFile()) {
+				comicFile = getComicFile(curId, curUrl);
+			}
+			if(comicFile != null || !provider.needComicFile()) {
+				String fileUrl = provider.extractFileUrl(curId, comicFile);
+				String nextUrl = provider.extractNextUrl(curId, comicFile);
+				String localFile = downloadFile(provider, curId, fileUrl);
+				if (fileUrl != null && localFile != null) {
+					if (provider.getComicById(curId) == null) {
+						SQLiteDatabase db = provider.getDbh().getWritableDatabase();
+						ContentValues values = new ContentValues();
+						values.put(Comic.COLUMN_NAME_ID, curId);
+						values.put(Comic.COLUMN_NAME_TITLE, provider.extractTitle(curId, comicFile));
+						values.put(Comic.COLUMN_NAME_ALT_TEXT, provider.extractAltText(curId, comicFile));
+						values.put(Comic.COLUMN_NAME_COMIC_URL, curUrl);
+						values.put(Comic.COLUMN_NAME_FILE_URL, fileUrl);
+						values.put(Comic.COLUMN_NAME_LOCAL_FILE, localFile);
+						values.put(Comic.COLUMN_NAME_PREV, prevId);
+						values.put(Comic.COLUMN_NAME_NEXT, ComicProvider.ID_END_BACK);
 
-					long newRowId = db.insert(provider.getTableName(), null, values);
+						long newRowId = db.insert(provider.getTableName(), null, values);
 
-					if(newRowId != curId){
-						System.err.println("Id mismatch: " + newRowId + " / " + curId);
-						if(newRowId > curId) {
-							curId = (int) newRowId;
+						if (newRowId != curId) {
+							System.err.println("Id mismatch: " + newRowId + " / " + curId);
+							if (newRowId > curId) {
+								curId = (int) newRowId;
+							}
 						}
+
+						values.clear();
+						values.put(Comic.COLUMN_NAME_NEXT, curId);
+						String selection = Comic.COLUMN_NAME_ID + " LIKE ?";
+						String[] selectionArgs = {String.valueOf(prevId)};
+						int cnt = db.update(provider.getTableName(), values, selection, selectionArgs);
+
+						notifyNewComic(curId, false);
+
+						if (curId - lastProgress > progressStep) {
+							notBuilder.setContentText(provider.getNotificationMessage(curId));
+							notificationManager.notify(notificationId, notBuilder.build());
+							lastProgress = curId;
+						}
+
+						bad = 0;
 					}
+					prevId = curId;
+					downloaded++;
 
-					values.clear();
-					values.put(Comic.COLUMN_NAME_NEXT, curId);
-					String selection = Comic.COLUMN_NAME_ID + " LIKE ?";
-					String[] selectionArgs = {String.valueOf(prevId)};
-					int cnt = db.update(provider.getTableName(), values, selection, selectionArgs);
-
-					notifyNewComic(curId, false);
-
-					if(curId - lastProgress > progressStep){
-						notBuilder.setContentText(provider.getNotificationMessage(curId));
-						notificationManager.notify(notificationId, notBuilder.build());
-						lastProgress = curId;
+					if (downloadCount > 0 && downloaded > downloadCount) {
+						break;
+					}
+				} else {
+					System.err.println(curId + ": Bad fileUrl or localFile");
+					bad++;
+					if (nextUrl == null || bad > downloadBadAllowed) {
+						break;
 					}
 				}
-				prevId = curId;
-				downloaded++;
-				curId++;
-
-				if(downloadCount > 0 && downloaded > downloadCount){
+				// TODO check whether old and new url are the same (difficult right now for ruthe)
+				if(nextUrl == null){
 					break;
 				}
+				curUrl = nextUrl;
+				curId++;
 			} else {
+				System.err.println(curId + " (" + curUrl + "): Bad comicFile");
 				bad++;
-				if (nextUrl == null || bad > downloadBadAllowed) {
+				if (bad > downloadBadAllowed) {
 					break;
 				}
 			}
-			// TODO check whether old and new url are the same (difficult right now for ruthe)
-			curUrl = nextUrl;
 		}
 
 		notifyNewComic(-1, true);

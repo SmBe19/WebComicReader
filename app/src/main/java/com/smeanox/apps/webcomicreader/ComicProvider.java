@@ -20,6 +20,7 @@ public abstract class ComicProvider {
 	public enum ComicProviders{
 		ruthe,
 		xkcd,
+		cnh,
 	}
 	private static Map<ComicProviders, ComicProvider> comicProvidersComicProviderMap = new HashMap<>();
 
@@ -52,6 +53,8 @@ public abstract class ComicProvider {
 	public static ComicProvider getComicProvider(ComicProviders comicProviders) {
 		return comicProvidersComicProviderMap.get(comicProviders);
 	}
+
+	public abstract boolean needComicFile();
 
 	public abstract String getPrefsName();
 
@@ -247,14 +250,14 @@ public abstract class ComicProvider {
 		public void createTable(){
 			SQLiteDatabase db = getWritableDatabase();
 			db.execSQL("CREATE TABLE IF NOT EXISTS " + getTableName() + " ("
-							+ Comic.COLUMN_NAME_ID + ", "
-							+ Comic.COLUMN_NAME_TITLE + ", "
-							+ Comic.COLUMN_NAME_ALT_TEXT + ", "
-							+ Comic.COLUMN_NAME_COMIC_URL + ", "
-							+ Comic.COLUMN_NAME_FILE_URL + ", "
-							+ Comic.COLUMN_NAME_LOCAL_FILE + ", "
-							+ Comic.COLUMN_NAME_PREV + ", "
-							+ Comic.COLUMN_NAME_NEXT + ")"
+							+ Comic.COLUMN_NAME_ID + " INTEGER PRIMARY KEY, "
+							+ Comic.COLUMN_NAME_TITLE + " TEXT, "
+							+ Comic.COLUMN_NAME_ALT_TEXT + " TEXT, "
+							+ Comic.COLUMN_NAME_COMIC_URL + " TEXT, "
+							+ Comic.COLUMN_NAME_FILE_URL + " TEXT, "
+							+ Comic.COLUMN_NAME_LOCAL_FILE + " TEXT, "
+							+ Comic.COLUMN_NAME_PREV + " INTEGER, "
+							+ Comic.COLUMN_NAME_NEXT + " INTEGER)"
 			);
 		}
 

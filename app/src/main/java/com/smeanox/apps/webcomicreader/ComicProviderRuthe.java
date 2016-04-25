@@ -9,6 +9,11 @@ public class ComicProviderRuthe extends ComicProvider {
 	}
 
 	@Override
+	public boolean needComicFile() {
+		return false;
+	}
+
+	@Override
 	public String getPrefsName() {
 		return "com.smeanox.apps.webcomicreader.ruthe";
 	}

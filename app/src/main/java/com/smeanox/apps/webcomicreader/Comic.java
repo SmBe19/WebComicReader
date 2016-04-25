@@ -1,3 +1,6 @@
+// http://stackoverflow.com/questions/18471780/android-adb-retrieve-database-using-run-as
+// adb exec-out run-as package.name cat databases/file > file
+
 package com.smeanox.apps.webcomicreader;
 
 import android.os.Environment;

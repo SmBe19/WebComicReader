@@ -23,6 +23,7 @@
     <string name="RutheNotText">Downloading Ruthe</string>
     <string name="RutheNotTextFinished">Downloading Ruthe finished</string>
 
+    <string name="xkcd_first_url">http://xkcd.com/1/</string>
     <string name="xkcd_url_prefix">http://xkcd.com</string>
     <string name="xkcd_url_postfix"></string>
     <string name="xkcdDownloadPrefix">xkcd</string>
@@ -35,10 +36,23 @@
     <string name="xkcdTitleRegex"><![CDATA[<div id=\"ctitle\">(.*?)</div>]]></string>
     <string name="xkcdAltRegex"><![CDATA[<img src=\"\\S*?\" title=\"(.*?)\" ]]></string>
 
+    <string name="cnh_first_url">http://explosm.net/comics/15/</string>
+    <string name="cnh_url_prefix">http://explosm.net</string>
+    <string name="cnh_url_postfix"></string>
+    <string name="cnhDownloadPrefix">cnh</string>
+    <string name="cnhDownloadPostfix">.png</string>
+    <string name="cnhNotTitle">Downloading</string>
+    <string name="cnhNotText">Downloading Cyanide &amp; Happiness</string>
+    <string name="cnhNotTextFinished">Downloading Cyanide &amp; Happiness finished</string>
+    <string name="cnhNextRegex"><![CDATA[<a href=\"(\\S*?)\" class=\"next-comic \"]]></string>
+    <string name="cnhImgRegex"><![CDATA[<img id=\"main-comic\" src=\"(\\S*)\"/>]]></string>
+    <string name="cnhAltRegex"><![CDATA[<small class=\"author-credit-name\">(.*?)</small>]]></string>
+
     <string name="action_first">first comic</string>
     <string name="action_last">last comic</string>
     <string name="deleteDialogTitle">Are you sure?</string>
     <string name="deleteDialogMessage">Do you really want to delete everything?</string>
     <string name="deleteDialogPositive">Yes I do!</string>
     <string name="eleteDialogNegative">Nope!!!</string>
+    <string name="MainButtonCnH"><![CDATA[Cyanide & Happiness]]></string>
 </resources>

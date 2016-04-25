@@ -28,6 +28,13 @@
         android:id="@+id/mainButtonXkcd"
         android:onClick="openComic"
         android:layout_below="@+id/mainButtonRuthe"
-        android:layout_alignLeft="@+id/mainButtonRuthe"
-        android:layout_alignStart="@+id/mainButtonRuthe"/>
+        android:layout_centerHorizontal="true"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/MainButtonCnH"
+        android:id="@+id/mainButtonCnH"
+        android:onClick="openComic"
+        android:layout_below="@+id/mainButtonXkcd"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

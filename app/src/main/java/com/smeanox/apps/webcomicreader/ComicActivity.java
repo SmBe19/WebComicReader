@@ -36,8 +36,10 @@ public class ComicActivity extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		String comicName = getIntent().getStringExtra(MainActivity.EXTRA_COMIC_NAME);
-		if(getResources().getString(R.string.MainButtonRuthe).equals(comicName)){
+		if(getResources().getString(R.string.MainButtonRuthe).equals(comicName)) {
 			provider = new ComicProviderRuthe(this);
+		} else if(getResources().getString(R.string.MainButtonCnH).equals(comicName)) {
+			provider = new ComicProviderCnH(this);
 		} else {
 			provider = new ComicProviderXkcd(this);
 		}

@@ -5,27 +5,45 @@ import android.content.Context;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ComicProviderXkcd extends ComicProvider {
-
-	Pattern nextPattern, imgPattern, titlePattern, altPattern;
+public class ComicProviderXkcd extends ComicProviderRegexer {
 
 	public ComicProviderXkcd(Context context) {
 		super(context);
+	}
 
-		String nextRegex = context.getResources().getString(R.string.xkcdNextRegex);
-		String imgRegex = context.getResources().getString(R.string.xkcdImgRegex);
-		String titleRegex = context.getResources().getString(R.string.xkcdTitleRegex);
-		String altRegex = context.getResources().getString(R.string.xkcdAltRegex);
+	@Override
+	protected String getNextRegex() {
+		return getContext().getResources().getString(R.string.xkcdNextRegex);
+	}
 
-		System.err.println(nextRegex);
-		System.err.println(imgRegex);
-		System.err.println(titleRegex);
-		System.err.println(altRegex);
+	@Override
+	protected String getImgRegex() {
+		return getContext().getResources().getString(R.string.xkcdImgRegex);
+	}
 
-		nextPattern = Pattern.compile(nextRegex);
-		imgPattern = Pattern.compile(imgRegex);
-		titlePattern = Pattern.compile(titleRegex);
-		altPattern = Pattern.compile(altRegex);
+	@Override
+	protected String getTitleRegex() {
+		return getContext().getResources().getString(R.string.xkcdTitleRegex);
+	}
+
+	@Override
+	protected String getAltRegex() {
+		return getContext().getResources().getString(R.string.xkcdAltRegex);
+	}
+
+	@Override
+	protected String getFullUrl(String nextUrl) {
+		return getContext().getString(R.string.xkcd_url_prefix) + nextUrl + getContext().getString(R.string.xkcd_url_postfix);
+	}
+
+	@Override
+	protected boolean isLastUrl(String nextUrl) {
+		return "#".equals(nextUrl);
+	}
+
+	@Override
+	public boolean needComicFile() {
+		return true;
 	}
 
 	@Override
@@ -60,43 +78,7 @@ public class ComicProviderXkcd extends ComicProvider {
 
 	@Override
 	public String getStartUrl() {
-		return getContext().getString(R.string.xkcd_url_prefix) + "/" + 1 + "/" + getContext().getString(R.string.xkcd_url_postfix);
-	}
-
-	@Override
-	public String extractNextUrl(int id, String comicPage) {
-		Matcher matcher = nextPattern.matcher(comicPage);
-		if(matcher.find()){
-			return getContext().getString(R.string.xkcd_url_prefix) + matcher.group(1) + getContext().getString(R.string.xkcd_url_postfix);
-		}
-		return null;
-	}
-
-	@Override
-	public String extractFileUrl(int id, String comicPage) {
-		Matcher matcher = imgPattern.matcher(comicPage);
-		if(matcher.find()){
-			return matcher.group(1);
-		}
-		return null;
-	}
-
-	@Override
-	public String extractTitle(int id, String comicPage) {
-		Matcher matcher = titlePattern.matcher(comicPage);
-		if(matcher.find()){
-			return matcher.group(1);
-		}
-		return null;
-	}
-
-	@Override
-	public String extractAltText(int id, String comicPage) {
-		Matcher matcher = altPattern.matcher(comicPage);
-		if(matcher.find()){
-			return matcher.group(1);
-		}
-		return null;
+		return getContext().getString(R.string.xkcd_first_url);
 	}
 
 	@Override
