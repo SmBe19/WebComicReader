@@ -1,10 +1,12 @@
-package com.smeanox.apps.webcomicreader;
+package com.smeanox.apps.webcomicreader.providers;
 
 import android.content.Context;
 
-public class ComicProviderRuthe extends ComicProvider {
+import com.smeanox.apps.webcomicreader.R;
 
-	public ComicProviderRuthe(Context context) {
+public class ComicProvider_ruthe extends ComicProvider {
+
+	public ComicProvider_ruthe(Context context) {
 		super(context);
 	}
 
@@ -30,17 +32,17 @@ public class ComicProviderRuthe extends ComicProvider {
 
 	@Override
 	public String getNotificationTitle() {
-		return getContext().getString(R.string.RutheNotTitle);
+		return getContext().getString(R.string.rutheNotTitle);
 	}
 
 	@Override
 	public String getNotificationMessage(int id) {
-		return getContext().getString(R.string.RutheNotText) + " " + id;
+		return getContext().getString(R.string.rutheNotText) + " " + id;
 	}
 
 	@Override
 	public String getNotificationMessageDone() {
-		return getContext().getString(R.string.RutheNotTextFinished);
+		return getContext().getString(R.string.rutheNotTextFinished);
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class ComicProviderRuthe extends ComicProvider {
 
 	@Override
 	public String extractFileUrl(int id, String comicPage) {
-		return getContext().getString(R.string.ruthe_url_prefix) + String.format("%04d", id) + getContext().getString(R.string.ruthe_url_postfix);
+		return getContext().getString(R.string.rutheUrlPrefix) + String.format("%04d", id) + getContext().getString(R.string.rutheUrlPostfix);
 	}
 
 	@Override

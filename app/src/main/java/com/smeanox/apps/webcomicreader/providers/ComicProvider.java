@@ -1,4 +1,4 @@
-package com.smeanox.apps.webcomicreader;
+package com.smeanox.apps.webcomicreader.providers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,10 +8,12 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
 
-import java.io.File;
+import com.smeanox.apps.webcomicreader.Comic;
+import com.smeanox.apps.webcomicreader.ComicDownloadService;
+import com.smeanox.apps.webcomicreader.R;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +23,11 @@ public abstract class ComicProvider {
 		ruthe,
 		xkcd,
 		cnh,
+		commitstrip,
+		cuek,
+		itsthetie,
+		lovenstein,
+		loadingartist,
 	}
 	private static Map<ComicProviders, ComicProvider> comicProvidersComicProviderMap = new HashMap<>();
 
@@ -38,6 +45,16 @@ public abstract class ComicProvider {
 	public ComicProvider(Context context) {
 		this.context = context;
 
+		init();
+	}
+
+	// call init() afterwards!!!
+	protected ComicProvider(Context context, String tableName, ComicProviders providers) {
+		this.context = context;
+	}
+
+	// getTableName / getComicProviders might not yet return the correct value
+	protected void init(){
 		comics = new HashMap<>();
 
 		prefs = context.getSharedPreferences(getPrefsName(), Context.MODE_PRIVATE);

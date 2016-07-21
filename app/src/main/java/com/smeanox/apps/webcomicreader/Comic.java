@@ -5,6 +5,8 @@ package com.smeanox.apps.webcomicreader;
 
 import android.os.Environment;
 
+import com.smeanox.apps.webcomicreader.providers.ComicProvider;
+
 import java.io.File;
 
 public class Comic {

@@ -1,4 +1,4 @@
-package com.smeanox.apps.webcomicreader;
+package com.smeanox.apps.webcomicreader.providers;
 
 import android.content.Context;
 
@@ -11,6 +11,16 @@ public abstract class ComicProviderRegexer extends ComicProvider {
 
 	public ComicProviderRegexer(Context context) {
 		super(context);
+
+		initPatterns();
+	}
+
+	// call init & initPatterns afterwards!!!
+	protected ComicProviderRegexer(Context context, String tableName, ComicProviders providers) {
+		super(context, tableName, providers);
+	}
+
+	protected void initPatterns() {
 
 		nextPattern = Pattern.compile(getNextRegex());
 		imgPattern = Pattern.compile(getImgRegex());

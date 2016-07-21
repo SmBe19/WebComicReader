@@ -4,10 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+
+import com.smeanox.apps.webcomicreader.providers.ComicProvider;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +24,30 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+
+		initButtons();
+	}
+
+	private void initButtons(){
+		LinearLayout buttonList = (LinearLayout) findViewById(R.id.mainComicsList);
+		assert buttonList != null;
+
+		for (ComicProvider.ComicProviders providers : ComicProvider.ComicProviders.values()) {
+			Button button = new Button(this);
+			button.setText(ComicActivity.getStringByName(this, providers.name() + "MainButton"));
+			button.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					openComic(v);
+				}
+			});
+
+			buttonList.addView(button);
+			//LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) buttonList.getLayoutParams();
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+			layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+			button.setLayoutParams(layoutParams);
+		}
 	}
 
 	@Override

@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.smeanox.apps.webcomicreader.providers.ComicProvider;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;

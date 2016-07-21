@@ -44,24 +44,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/rutheButtonPrev"
+            android:text="@string/ButtonPrev"
             android:onClick="prevComic"
-            android:id="@+id/rutheButtonPrev"/>
+            android:id="@+id/ButtonPrev"/>
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/rutheButtonRand"
+            android:text="@string/ButtonRand"
             android:onClick="randComic"
-            android:id="@+id/rutheButtonRand"/>
+            android:id="@+id/ButtonRand"/>
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/rutheButtonNext"
+            android:text="@string/ButtonNext"
             android:onClick="nextComic"
-            android:id="@+id/rutheButtonNext"/>
+            android:id="@+id/ButtonNext"/>
     </LinearLayout>
 </LinearLayout>

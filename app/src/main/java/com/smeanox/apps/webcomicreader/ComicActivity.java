@@ -1,7 +1,9 @@
 package com.smeanox.apps.webcomicreader;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -14,7 +16,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.smeanox.apps.webcomicreader.providers.ComicProvider;
+
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Stack;
 
 public class ComicActivity extends AppCompatActivity {
@@ -36,13 +42,28 @@ public class ComicActivity extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		String comicName = getIntent().getStringExtra(MainActivity.EXTRA_COMIC_NAME);
-		if(getResources().getString(R.string.MainButtonRuthe).equals(comicName)) {
-			provider = new ComicProviderRuthe(this);
-		} else if(getResources().getString(R.string.MainButtonCnH).equals(comicName)) {
-			provider = new ComicProviderCnH(this);
-		} else {
-			provider = new ComicProviderXkcd(this);
+
+		for (ComicProvider.ComicProviders providers : ComicProvider.ComicProviders.values()) {
+			if(getStringByName(this, providers.name() + "MainButton").equals(comicName)){
+				try {
+					String clazzName = "com.smeanox.apps.webcomicreader.providers.ComicProvider_" + providers.name();
+					Class<?> clazz = Class.forName(clazzName);
+					Constructor<?> constructor = clazz.getConstructor(Context.class);
+					provider = (ComicProvider) constructor.newInstance(this);
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+
 		getSupportActionBar().setTitle(comicName);
 
 		prefs = getSharedPreferences(provider.getPrefsName(), MODE_PRIVATE);
@@ -98,6 +119,16 @@ public class ComicActivity extends AppCompatActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	public static String getStringByName(Context context, String name){
+		try {
+			int resId = context.getResources().getIdentifier(name, "string", context.getPackageName());
+			return context.getResources().getString(resId);
+		} catch (Resources.NotFoundException e) {
+			throw e;
+			//return "";
+		}
 	}
 
 	private void setCurrentComic(Comic comic){

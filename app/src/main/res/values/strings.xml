@@ -1,31 +1,32 @@
 <resources>
     <string name="app_name">Web Comic Reader</string>
     <string name="action_settings">Settings</string>
-    <string name="MainButtonRuthe">Ruthe</string>
-    <string name="MainButtonXkcd">Xkcd</string>
     <string name="title_activity_settings">Settings</string>
     <string name="SettingsCopyright">© 2016 Benjamin Schmid</string>
     <string name="title_activity_comic">Comic</string>
-    <string name="action_download_all">Download all</string>
-    <string name="action_download_some">Download some</string>
+    <string name="action_download_all">download all</string>
+    <string name="action_download_some">download some</string>
     <string name="action_search">search</string>
     <string name="ImageViewDescription">comic</string>
-    <string name="rutheButtonPrev"><![CDATA[< prev]]></string>
-    <string name="rutheButtonRand">rand</string>
-    <string name="rutheButtonNext"><![CDATA[next >]]></string>
+    <string name="ButtonPrev"><![CDATA[< prev]]></string>
+    <string name="ButtonRand">rand</string>
+    <string name="ButtonNext"><![CDATA[next >]]></string>
     <string name="action_delete">delete comics</string>
 
-    <string name="ruthe_url_prefix">http://ruthe.de/cartoons/strip_</string>
-    <string name="ruthe_url_postfix">.jpg</string>
+
+    <string name="rutheMainButton">Ruthe</string>
+    <string name="rutheUrlPrefix">http://ruthe.de/cartoons/strip_</string>
+    <string name="rutheUrlPostfix">.jpg</string>
     <string name="rutheDownloadPrefix">ruthe</string>
     <string name="rutheDownloadPostfix">.jpg</string>
-    <string name="RutheNotTitle">Downloading</string>
-    <string name="RutheNotText">Downloading Ruthe</string>
-    <string name="RutheNotTextFinished">Downloading Ruthe finished</string>
+    <string name="rutheNotTitle">Downloading</string>
+    <string name="rutheNotText">Downloading Ruthe</string>
+    <string name="rutheNotTextFinished">Downloading Ruthe finished</string>
 
-    <string name="xkcd_first_url">http://xkcd.com/1/</string>
-    <string name="xkcd_url_prefix">http://xkcd.com</string>
-    <string name="xkcd_url_postfix"></string>
+    <string name="xkcdMainButton">xkcd</string>
+    <string name="xkcdFirstUrl">http://xkcd.com/1/</string>
+    <string name="xkcdUrlPrefix">http://xkcd.com</string>
+    <string name="xkcdUrlPostfix"></string>
     <string name="xkcdDownloadPrefix">xkcd</string>
     <string name="xkcdDownloadPostfix">.png</string>
     <string name="xkcdNotTitle">Downloading</string>
@@ -36,9 +37,10 @@
     <string name="xkcdTitleRegex"><![CDATA[<div id=\"ctitle\">(.*?)</div>]]></string>
     <string name="xkcdAltRegex"><![CDATA[<img src=\"\\S*?\" title=\"(.*?)\" ]]></string>
 
-    <string name="cnh_first_url">http://explosm.net/comics/15/</string>
-    <string name="cnh_url_prefix">http://explosm.net</string>
-    <string name="cnh_url_postfix"></string>
+    <string name="cnhMainButton"><![CDATA[Cyanide & Happiness]]></string>
+    <string name="cnhFirstUrl">http://explosm.net/comics/15/</string>
+    <string name="cnhUrlPrefix">http://explosm.net</string>
+    <string name="cnhUrlPostfix"></string>
     <string name="cnhDownloadPrefix">cnh</string>
     <string name="cnhDownloadPostfix">.png</string>
     <string name="cnhNotTitle">Downloading</string>
@@ -48,11 +50,78 @@
     <string name="cnhImgRegex"><![CDATA[<img id=\"main-comic\" src=\"(\\S*)\"/>]]></string>
     <string name="cnhAltRegex"><![CDATA[<small class=\"author-credit-name\">(.*?)</small>]]></string>
 
+    <string name="commitstripMainButton">Commitstrip</string>
+    <string name="commitstripFirstUrl">http://www.commitstrip.com/en/2012/02/22/interview/</string>
+    <string name="commitstripUrlPrefix"></string>
+    <string name="commitstripUrlPostfix"></string>
+    <string name="commitstripDownloadPrefix">commitstrip</string>
+    <string name="commitstripDownloadPostfix">.jpg</string>
+    <string name="commitstripNotTitle">Downloading</string>
+    <string name="commitstripNotText">Downloading Commitstrip</string>
+    <string name="commitstripNotTextFinished">Downloading Commitstrip finished</string>
+    <string name="commitstripNextRegex"><![CDATA[<a href=\"(\\S*?)\" rel=\"next\">]]></string>
+    <string name="commitstripImgRegex"><![CDATA[<img .*?src=\"(\\S*?)\".*? width]]></string>
+    <string name="commitstripTitleRegex"><![CDATA[<h1 class=\"entry-title\">(.*?)</h1>]]></string>
+    <string name="commitstripAltRegex"><![CDATA[<time .*?>(.*?)</time>]]></string>
+
+    <string name="cuekMainButton">cheer up, emo kid</string>
+    <string name="cuekFirstUrl">http://www.cheerupemokid.com/comic/truth</string>
+    <string name="cuekUrlPrefix"></string>
+    <string name="cuekUrlPostfix"></string>
+    <string name="cuekDownloadPrefix">cuek</string>
+    <string name="cuekDownloadPostfix">.png</string>
+    <string name="cuekNotTitle">Downloading</string>
+    <string name="cuekNotText">Downloading cheer up, emo kid</string>
+    <string name="cuekNotTextFinished">Downloading cheer up, emo kid finished</string>
+    <string name="cuekNextRegex"><![CDATA[<a href=\"(\\S*?)\" class=\"next\"]]></string>
+    <string name="cuekImgRegex"><![CDATA[<img src=\"(\\S*?)\" alt=\"(?:\n|.)*?\" title=\"(?:\n|.)*?\"\\s*?/>]]></string>
+    <string name="cuekTitleRegex"><![CDATA[<h1><span class=\"no\">.*?</span> (.*?)</h1>]]></string>
+    <string name="cuekAltRegex"><![CDATA[<img src=\"\\S*?\" alt=\"(?:\n|.)*?\" title=\"((?:\n|.)*?)\"\\s*?/>]]></string>
+
+    <string name="itsthetieMainButton">it\'s the tie</string>
+    <string name="itsthetieFirstUrl">http://itsthetie.com/comic/for-science-2/</string>
+    <string name="itsthetieUrlPrefix"></string>
+    <string name="itsthetieUrlPostfix"></string>
+    <string name="itsthetieDownloadPrefix">itsthetie</string>
+    <string name="itsthetieDownloadPostfix">.png</string>
+    <string name="itsthetieNotTitle">Downloading</string>
+    <string name="itsthetieNotText">Downloading it\'s the tie</string>
+    <string name="itsthetieNotTextFinished">Downloading it\'s the tie finished</string>
+    <string name="itsthetieNextRegex"><![CDATA[<a href=\"(\\S*?)\" rel=\"next\">]]></string>
+    <string name="itsthetieImgRegex"><![CDATA[<img .*?src=\"(http://itsthetie.com\\S*?)\" .*?height.*?/>]]></string>
+    <string name="itsthetieTitleRegex"><![CDATA[<a .*?rel=\"bookmark\">(.*?)</a>]]></string>
+    <string name="itsthetieAltRegex"><![CDATA[<a href=\"\\S*?\">(.*,.*)</a>]]></string>
+
+    <string name="lovensteinMainButton">Mr. Lovenstein</string>
+    <string name="lovensteinFirstUrl">http://www.mrlovenstein.com/comic/1</string>
+    <string name="lovensteinUrlPrefix">http://www.mrlovenstein.com</string>
+    <string name="lovensteinUrlPostfix"></string>
+    <string name="lovensteinDownloadPrefix">lovenstein</string>
+    <string name="lovensteinDownloadPostfix">.png</string>
+    <string name="lovensteinNotTitle">Downloading</string>
+    <string name="lovensteinNotText">Downloading Mr. Lovenstein</string>
+    <string name="lovensteinNotTextFinished">Downloading Mr. Lovenstein finished</string>
+    <string name="lovensteinNextRegex"><![CDATA[<a href=\"(/comic/\\S*?)\"><img src=\"/images/nav_right.png\"]]></string>
+    <string name="lovensteinImgRegex"><![CDATA[<img id=\"comic_main_image\" src=\"(\\S*?)\"]]></string>
+    
+    <string name="loadingartistMainButton">loading artist</string>
+    <string name="loadingartistFirstUrl">http://www.loadingartist.com/comic/born/</string>
+    <string name="loadingartistUrlPrefix"></string>
+    <string name="loadingartistUrlPostfix"></string>
+    <string name="loadingartistDownloadPrefix">loadingartist</string>
+    <string name="loadingartistDownloadPostfix">.png</string>
+    <string name="loadingartistNotTitle">Downloading</string>
+    <string name="loadingartistNotText">Downloading loading artist</string>
+    <string name="loadingartistNotTextFinished">Downloading loading artist finished</string>
+    <string name="loadingartistNextRegex"><![CDATA[<a class=\"next.*?\" href=\"(\\S*?)\">]]></string>
+    <string name="loadingartistImgRegex"><![CDATA[<img src=\"(\\S*?)\" alt]]></string>
+    <string name="loadingartistTitleRegex"><![CDATA[<h1>(.*?)</h1>]]></string>
+    <string name="loadingartistAltRegex"><![CDATA[<span class=\"date\">\n(.*?)\\s*</span>]]></string>
+    
     <string name="action_first">first comic</string>
     <string name="action_last">last comic</string>
     <string name="deleteDialogTitle">Are you sure?</string>
     <string name="deleteDialogMessage">Do you really want to delete everything?</string>
     <string name="deleteDialogPositive">Yes I do!</string>
     <string name="eleteDialogNegative">Nope!!!</string>
-    <string name="MainButtonCnH"><![CDATA[Cyanide & Happiness]]></string>
 </resources>
