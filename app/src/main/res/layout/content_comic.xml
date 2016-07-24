@@ -33,13 +33,24 @@
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
-        android:contentDescription="@string/ImageViewDescription"/>
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView"
+            android:contentDescription="@string/ImageViewDescription"/>
+
+        <ZoomControls
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageZoomControls"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
