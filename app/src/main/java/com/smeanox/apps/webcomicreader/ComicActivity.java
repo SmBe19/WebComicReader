@@ -28,6 +28,7 @@ import java.util.Stack;
 public class ComicActivity extends AppCompatActivity {
 
 	private final String PREFS_CURRENT_COMIC = "currentComic";
+	private final String STATE_LAST_COMICS = "lastComics";
 	private Comic currentComic;
 	private SharedPreferences prefs;
 
@@ -73,7 +74,28 @@ public class ComicActivity extends AppCompatActivity {
 
 		lastComics = new Stack<>();
 
+		if (savedInstanceState != null) {
+			int[] last = savedInstanceState.getIntArray(STATE_LAST_COMICS);
+			if(last != null) {
+					for (int i = last.length - 1; i >= 0; i--) {
+					lastComics.push(provider.getComicById(last[i]));
+				}
+			}
+		}
+
 		updateCurrentComic();
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		int size = lastComics.size();
+		int[] last = new int[size];
+		for (int i = 0; i < size; i++) {
+			last[i] = lastComics.pop().getId();
+		}
+		outState.putIntArray(STATE_LAST_COMICS, last);
+
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
