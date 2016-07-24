@@ -10,13 +10,28 @@
     tools:context=".ComicActivity"
     tools:showIn="@layout/activity_comic">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/titleText"
-        android:layout_gravity="center_horizontal"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/titleText"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/comicidText"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/comicid_horizontal_margin"
+            android:layout_marginEnd="@dimen/comicid_horizontal_margin"
+            tools:ignore="RelativeOverlap"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="match_parent"

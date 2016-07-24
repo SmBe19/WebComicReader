@@ -124,4 +124,9 @@
     <string name="deleteDialogMessage">Do you really want to delete everything?</string>
     <string name="deleteDialogPositive">Yes I do!</string>
     <string name="eleteDialogNegative">Nope!!!</string>
+    <string name="action_goto">goto</string>
+    <string name="goto_dialog_title">goto comic</string>
+    <string name="goto_dialog_positive">Go!</string>
+    <string name="goto_dialog_negative">Cancel</string>
+    <string name="goto_dialog_hint">comic id</string>
 </resources>

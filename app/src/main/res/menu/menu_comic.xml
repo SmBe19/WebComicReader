@@ -4,9 +4,9 @@
       tools:context="com.smeanox.apps.webcomicreader.MainActivity">
 
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/action_goto"
         android:orderInCategory="99"
-        android:title="@string/action_search"
+        android:title="@string/action_goto"
         android:icon="@android:drawable/ic_menu_search"
         app:showAsAction="ifRoom"/>
     <item
@@ -37,4 +37,10 @@
         android:orderInCategory="104"
         android:title="@string/action_last"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="105"
+        android:title="@string/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="ifRoom"/>
 </menu>

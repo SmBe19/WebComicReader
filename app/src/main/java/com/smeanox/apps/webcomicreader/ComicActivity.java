@@ -10,9 +10,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -113,6 +115,9 @@ public class ComicActivity extends AppCompatActivity {
 			case R.id.action_last:
 				setCurrentComic(provider.getLastComic());
 				return true;
+			case R.id.action_goto:
+				gotoComic();
+				return true;
 			case android.R.id.home:
 				this.finish();
 				return true;
@@ -131,6 +136,33 @@ public class ComicActivity extends AppCompatActivity {
 		}
 	}
 
+	private void gotoComic() {
+		final EditText input = new EditText(this);
+		input.setInputType(InputType.TYPE_CLASS_NUMBER);
+		input.setHint(R.string.goto_dialog_hint);
+		new AlertDialog.Builder(this)
+				.setView(input)
+				.setTitle(getString(R.string.goto_dialog_title))
+				.setPositiveButton(getString(R.string.goto_dialog_positive), new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Comic comic = provider.getComicById(Integer.parseInt(input.getText().toString()));
+						if(comic != null) {
+							setCurrentComic(comic);
+						} else {
+							Snackbar.make(findViewById(R.id.imageView), "Nope", Snackbar.LENGTH_SHORT).show();
+						}
+					}
+				})
+				.setNegativeButton(getString(R.string.goto_dialog_negative), new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// i don't care
+					}
+				})
+				.show();
+	}
+
 	private void setCurrentComic(Comic comic){
 		if(currentComic != null){
 			lastComics.push(currentComic);
@@ -142,7 +174,9 @@ public class ComicActivity extends AppCompatActivity {
 	private void updateCurrentComic() {
 		ImageView imageView = (ImageView) findViewById(R.id.imageView);
 		TextView titleView = (TextView) findViewById(R.id.titleText);
+		TextView comicidView = (TextView) findViewById(R.id.comicidText);
 		TextView altView = (TextView) findViewById(R.id.altText);
+		assert imageView != null && titleView != null && comicidView != null && altView != null;
 		if(currentComic == null){
 			imageView.setImageURI(null);
 			return;
@@ -153,6 +187,7 @@ public class ComicActivity extends AppCompatActivity {
 		} else {
 			imageView.setImageURI(Uri.fromFile(comicFile));
 			titleView.setText(currentComic.getTitle());
+			comicidView.setText(String.valueOf(currentComic.getId()));
 			altView.setText(currentComic.getAltText());
 		}
 
@@ -161,7 +196,7 @@ public class ComicActivity extends AppCompatActivity {
 
 	public void prevComic(View view) {
 		if (currentComic == null) {
-			setCurrentComic(provider.getLastComic());
+			setCurrentComic(provider.getFirstComic());
 		} else if(currentComic.hasPrevious()){
 			setCurrentComic(currentComic.getPrevious());
 		}
